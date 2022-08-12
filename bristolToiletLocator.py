@@ -29,6 +29,10 @@ except Error as e:
     print("Error while connecting to MySQL", e)
 finally:
     if connection.is_connected():
+        mycursor = connection.cursor()
+        mycursor.execute("SELECT * FROM bristol_public_toilets")
+        bristol_toilet_data = mycursor.fetchall()
         cursor.close()
         connection.close()
         print("MySQL connection is closed")
+
