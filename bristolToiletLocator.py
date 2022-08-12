@@ -12,6 +12,9 @@ import os
 # Getting MySQL credentials
 load_dotenv(find_dotenv())
 
+# Defining SQL query to execute
+sql = "SELECT * FROM bristol_public_toilets"
+
 try:
     connection = mysql.connector.connect(host='localhost',
                                          database='BRISTOL_DATA',
@@ -30,9 +33,13 @@ except Error as e:
 finally:
     if connection.is_connected():
         mycursor = connection.cursor()
+
         mycursor.execute("SELECT * FROM bristol_public_toilets")
-        bristol_toilet_data = mycursor.fetchall()
+        df = pd.DataFrame(mycursor.fetchall())
+
         cursor.close()
         connection.close()
         print("MySQL connection is closed")
+
+print(df)
 
